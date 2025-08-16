@@ -44,7 +44,14 @@ class PluginAPI {
         this.movementModule = new Movement(proxy, this.core);
         this.miscModule = new Misc(proxy, this.core);
         this.hypixelModule = new Hypixel(proxy, this.core);
-        this.helpersModule = new Helpers();
+
+        const helpersInstance = new Helpers();
+        Object.freeze(helpersInstance);
+        Object.defineProperty(this, 'helpersModule', {
+            value: helpersInstance,
+            writable: false,
+            configurable: false
+        });
 
         this.config = this.core.config;
         this.log = this.core.log.bind(this.core);
